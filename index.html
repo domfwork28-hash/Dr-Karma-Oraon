@@ -7,21 +7,21 @@
 <meta name="description" content="A story map of the life and work of Dr. Karma Oraon, anthropologist of Ranchi University, Jharkhand.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel:wght@700;800&family=Karma:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a story-map series. Chapter tabs over a scrolling narrative panel on the left, a map on the right that flies to each chapter's places.
-   Look: Khovar and Sohrai wall painting of Jharkhand, scratched kaolin lines over manganese black, with red and yellow ochre. Single dark theme by choice. */
+   Look: "Sal Forest". The green of the Chotanagpur sal forests, mist-white text, mahua gold and laterite red, with sal-leaf motifs. Single dark theme by choice. */
 :root{
-  --soot:#16120e;        /* manganese black ground */
-  --soot-2:#1f1914;      /* panel */
-  --soot-3:#2b231c;      /* land */
-  --line:#3d3228;        /* borders, rules */
-  --kaolin:#eee6d6;      /* text, white clay */
-  --kaolin-dim:#b3a791;  /* secondary text */
-  --ochre:#d2573a;       /* red ochre, the accent */
-  --haldi:#e0a93e;       /* yellow ochre, map points */
-  --display:"Rozha One", "Bodoni 72", Didot, Georgia, serif;
-  --body:"Newsreader", Georgia, "Times New Roman", serif;
+  --soot:#1c2a20;        /* sal green ground */
+  --soot-2:#223226;      /* panel */
+  --soot-3:#30443a;      /* land, canopy */
+  --line:#3b5144;        /* borders, rules */
+  --kaolin:#ecebdc;      /* text, mist */
+  --kaolin-dim:#b2b8a3;  /* secondary text */
+  --ochre:#d26a40;       /* laterite red */
+  --haldi:#e8b53a;       /* mahua gold, the accent and map points */
+  --display:"Martel", Georgia, "Times New Roman", serif;
+  --body:"Karma", Georgia, "Times New Roman", serif;
   --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   color-scheme:dark;
 }
@@ -34,14 +34,11 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .app{display:grid;grid-template-rows:auto auto 1fr;min-height:100%}
 /* Masthead */
 .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:14px 20px 10px}
-.mast h1{font-family:var(--display);font-weight:400;font-size:clamp(26px,3.2vw,36px);line-height:1;margin:0;letter-spacing:.01em}
-.mast h1 span{color:var(--ochre)}
+.mast h1{font-family:var(--display);font-weight:800;font-size:clamp(24px,3vw,34px);line-height:1.1;margin:0;letter-spacing:-.01em}
+.mast h1 span{color:var(--haldi)}
 .mast p{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--kaolin-dim)}
-/* Sohrai border: a band of ochre triangles */
-.band{height:12px;background:
-  linear-gradient(135deg,var(--ochre) 25%,transparent 25%) 0 0/12px 12px repeat-x,
-  linear-gradient(225deg,var(--ochre) 25%,transparent 25%) 0 0/12px 12px repeat-x,
-  var(--soot);border-bottom:1px solid var(--line)}
+/* Sal-leaf border over a laterite zigzag */
+.band{height:36px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2234%22%20height%3D%2226%22%20viewBox%3D%220%200%2034%2026%22%3E%3Cpath%20d%3D%22M17%202%20C27%207%2027%2019%2017%2024%20C7%2019%207%207%2017%202Z%22%20fill%3D%22none%22%20stroke%3D%22%23e8b53a%22%20stroke-width%3D%221.5%22%20transform%3D%22rotate%2890%2017%2013%29%22/%3E%3Cpath%20d%3D%22M5%2013%20H29%20M11%2013%20L8%209%20M11%2013%20L8%2017%20M17%2013%20L14%209%20M17%2013%20L14%2017%20M23%2013%20L20%209%20M23%2013%20L20%2017%22%20stroke%3D%22%23ecebdc%22%20stroke-opacity%3D%22.6%22%20stroke-width%3D%221%22%20fill%3D%22none%22/%3E%3C/svg%3E") 0 2px/34px 26px repeat-x,url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2216%22%20height%3D%228%22%20viewBox%3D%220%200%2016%208%22%3E%3Cpath%20d%3D%22M0%206%20L4%202%20L8%206%20L12%202%20L16%206%22%20fill%3D%22none%22%20stroke%3D%22%23d26a40%22%20stroke-width%3D%221.6%22/%3E%3C/svg%3E") 0 28px/16px 8px repeat-x,var(--soot);border-bottom:1px solid var(--line)}
 
 /* Tabs */
 .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin;background:var(--soot);border-bottom:1px solid var(--line);padding:0 12px}
@@ -61,7 +58,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 
 .chapter{padding:26px 26px 40px;display:flex;flex-direction:column;gap:18px}
 .eyebrow{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ochre);margin:0}
-.chapter h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.05;margin:0;text-wrap:balance}
+.chapter h2{font-family:var(--display);font-weight:800;font-size:clamp(27px,2.7vw,36px);line-height:1.15;letter-spacing:-.01em;margin:0;text-wrap:balance}
 .chapter h3{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--kaolin-dim);margin:10px 0 0;padding-top:14px;border-top:1px solid var(--line)}
 .chapter p{margin:0;max-width:62ch}
 .lede{font-size:19px;line-height:1.5}
@@ -70,7 +67,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .facts dd{margin:0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
 .stats div{background:var(--soot-2);padding:12px 10px}
-.stats strong{display:block;font-family:var(--display);font-weight:400;font-size:30px;line-height:1;color:var(--haldi);font-variant-numeric:tabular-nums}
+.stats strong{display:block;font-family:var(--display);font-weight:800;font-size:30px;line-height:1;color:var(--haldi);font-variant-numeric:tabular-nums}
 .stats span{font:11px/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--kaolin-dim)}
 
 /* Event list */
@@ -177,7 +174,7 @@ const P = {
   daltonganj:["Daltonganj",84.07,24.04],santhal:["Santhal Pargana",87.25,24.27]
 };
 // label nudges for crowded places: [dx, dy, anchor]
-const NUDGE = {bidisha:[8,14,"start"],kolkata:[8,-6,"start"],hazaribagh:[8,-6,"start"],ranchi:[9,15,"start"],
+const NUDGE = {bidisha:[8,14,"start"],kolkata:[8,-6,"start"],hazaribagh:[8,-6,"start"],ranchi:[-9,15,"end"],
   toronto:[-8,14,"end"],montreal:[8,-6,"start"],southampton:[-8,14,"end"],manchester:[-8,-6,"end"],hamburg:[8,-6,"start"],
   florence:[-8,-6,"end"],rome:[8,12,"start"],zagreb:[8,-6,"start"],raipur:[-8,14,"end"],bilaspur:[-8,-6,"end"],wardha:[-8,-6,"end"],
   santiniketan:[8,-6,"start"],dhaka:[8,4,"start"],patna:[8,-6,"start"],daltonganj:[-8,-6,"end"],santhal:[8,-6,"start"]};
