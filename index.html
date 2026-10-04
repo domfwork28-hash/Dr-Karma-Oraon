@@ -62,6 +62,33 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .chapter h3{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--kaolin-dim);margin:10px 0 0;padding-top:14px;border-top:1px solid var(--line)}
 .chapter p{margin:0;max-width:62ch}
 .lede{font-size:19px;line-height:1.5}
+blockquote.quote{margin:0;font-size:21px;line-height:1.45}
+.quote .tr{display:block;font:12px/1.5 var(--mono);font-style:normal;color:var(--kaolin-dim);margin-top:6px;letter-spacing:.02em}
+.ev .paper.quote::before{content:"Quote: "}
+.ev .srclink{display:table;margin-top:6px;font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--haldi);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--haldi) 40%,transparent)}
+.ev .srclink::after{content:" ↗"}
+.ev .srclink:hover{border-bottom-color:var(--haldi)}
+.stage.wide{grid-template-columns:1fr}
+.stage.wide .mapwrap{display:none}
+.stage.wide .chapter{max-width:1120px;margin:0 auto;width:100%}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.vcard{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.vframe{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--soot);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background-image:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--haldi) 14%,transparent),transparent 60%)}
+.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vplay{appearance:none;border:0;background:transparent;color:var(--kaolin);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;height:100%;justify-content:center}
+.vicon{width:64px;height:64px;border-radius:50%;background:var(--haldi);position:relative;transition:transform .2s}
+.vicon::after{content:"";position:absolute;left:26px;top:20px;border-left:18px solid var(--soot);border-top:12px solid transparent;border-bottom:12px solid transparent}
+.vplay:hover .vicon{transform:scale(1.08)}
+.vlabel{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.vext{text-decoration:none;color:var(--haldi)}
+.vext:hover{border-color:var(--haldi)}
+.vcard .where{font:11px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--kaolin-dim);display:block}
+.vtitle{display:block;font-size:16px;line-height:1.45}
+.ven{display:block;font-size:15px;color:var(--kaolin-dim);font-style:italic}
+.vcard .srclink{display:inline-block;margin-top:6px;font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--haldi);text-decoration:none}
+.inlink{appearance:none;background:none;border:0;padding:0;font:inherit;color:var(--haldi);text-decoration:underline;cursor:pointer}
+.book .pub{display:block;font-size:15px;color:var(--kaolin-dim);margin-top:4px}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:16px}
 .facts dt{font:12px/1.9 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--kaolin-dim)}
 .facts dd{margin:0}
@@ -171,45 +198,48 @@ const P = {
   toronto:["Toronto",-79.38,43.65],manchester:["Manchester",-2.24,53.48],dhaka:["Dhaka",90.41,23.81],washington:["Washington",-77.04,38.91],
   bidisha:["Bidisha",88.62,22.86],bhopal:["Bhopal",77.41,23.26],bilaspur:["Bilaspur",82.14,22.08],hazaribagh:["Hazaribagh",85.36,23.99],
   wardha:["Wardha",78.60,20.74],hyderabad:["Hyderabad",78.49,17.39],santiniketan:["Santiniketan",87.68,23.68],
-  daltonganj:["Daltonganj",84.07,24.04],santhal:["Santhal Pargana",87.25,24.27]
+  daltonganj:["Daltonganj",84.07,24.04],santhal:["Santhal Pargana",87.25,24.27],
+  bishunpur:["Bishunpur",84.20,23.38],lohardaga:["Lohardaga",84.68,23.43],chaibasa:["Chaibasa",85.81,22.55]
 };
 // label nudges for crowded places: [dx, dy, anchor]
 const NUDGE = {bidisha:[8,14,"start"],kolkata:[8,-6,"start"],hazaribagh:[8,-6,"start"],ranchi:[-9,15,"end"],
   toronto:[-8,14,"end"],montreal:[8,-6,"start"],southampton:[-8,14,"end"],manchester:[-8,-6,"end"],hamburg:[8,-6,"start"],
   florence:[-8,-6,"end"],rome:[8,12,"start"],zagreb:[8,-6,"start"],raipur:[-8,14,"end"],bilaspur:[-8,-6,"end"],wardha:[-8,-6,"end"],
-  santiniketan:[8,-6,"start"],dhaka:[8,4,"start"],patna:[8,-6,"start"],daltonganj:[-8,-6,"end"],santhal:[8,-6,"start"]};
+  santiniketan:[8,-6,"start"],dhaka:[8,4,"start"],patna:[8,-6,"start"],daltonganj:[-8,-6,"end"],santhal:[8,-6,"start"],bishunpur:[-8,14,"end"],lohardaga:[-8,-6,"end"],chaibasa:[8,14,"start"]};
 
 const E = s => s; // readability helper for the event tables below
 
 // ---------- Chapters ----------
 const CH = [
 { id:"life", tab:"Life", view:[[-128,-38],[155,58]], home:true, arcs:false,
-  note:"Every place named in his CV, 1983 to 2014",
+  note:"Every place in his life and work, 1952 to 2023",
   all:true,
   html:`
-  <p class="eyebrow">Anthropologist of tribal Jharkhand</p>
-  <h2>From Morabadi, Ranchi, to the congresses of the world</h2>
-  <p class="lede">Dr. Karma Oraon is an anthropologist whose working life has been spent on the religion, culture and rights of the tribal peoples of Chotanagpur. He began teaching in the Department of Anthropology at Ranchi University on 11 March 1978.</p>
+  <p class="eyebrow">Anthropologist of tribal Jharkhand &middot; 1952–2023</p>
+  <h2>From Longa Mahua Toli to the congresses of the world</h2>
+  <p class="lede">Dr. Karma Oraon was an anthropologist, teacher and Adivasi intellectual. Born into a farming family in a village of Gumla district, he spent his working life on the religion, culture and rights of the tribal peoples of Chotanagpur, and became the leading scholarly voice of the movement for a Sarna religion code.</p>
+  <blockquote class="quote" lang="hi">“आदिवासियत ही पृथ्वी और पर्यावरण की रक्षा कर सकती है”<span class="tr">Only Adivasi-ness can protect the earth and the environment. His signature line, as recalled in his obituaries.</span></blockquote>
   <dl class="facts">
-    <dt>Born</dt><dd>24 October 1952</dd>
+    <dt>Born</dt><dd>24 October 1952, Longa Mahua Toli, Bishunpur block, Gumla district</dd>
+    <dt>Died</dt><dd>14 May 2023, Ranchi, aged about 72</dd>
     <dt>Father</dt><dd>Late Sohrai Oraon</dd>
     <dt>Degrees</dt><dd>M.Sc. (Anthropology), LL.B., Ph.D.</dd>
-    <dt>Post</dt><dd>Professor, Department of Anthropology, Ranchi University (time-bound scheme from 11.03.1994; merit promotion from 13.03.1997)</dd>
-    <dt>Home</dt><dd>New Area, Morabadi, Ranchi, Jharkhand</dd>
+    <dt>Career</dt><dd>Lecturer from 1978 at Ram Lakhan Singh Yadav College, Ranchi; later Professor and Head of Anthropology and Dean of Social Sciences, Ranchi University</dd>
+    <dt>Home</dt><dd>New Area, Morabadi, Ranchi</dd>
   </dl>
   <div class="stats">
     <div><strong>30+</strong><span>years of congresses, 1983–2014</span></div>
     <div><strong>13</strong><span>countries hosting his papers</span></div>
     <div><strong>~48</strong><span>research papers published</span></div>
   </div>
-  <p>This site follows his work place by place, in the manner of a story map. Choose a chapter above, or step through them in order. The map moves to the places each chapter names; hover a line in a list to find it on the map.</p>`},
+  <p>This site follows his life and work place by place, in the manner of a story map. Choose a chapter above, or step through them in order. The map moves to the places each chapter names; hover a line in a list to find it on the map.</p>`},
 
 { id:"department", tab:"The department", view:[[77,18],[93,28.5]], home:true,
   note:"Ranchi University, where he taught from 1978",
   html:`
   <p class="eyebrow">Ranchi University, 1978 onward</p>
   <h2>Building the Department of Anthropology</h2>
-  <p>At Ranchi University Dr. Oraon has served as Head of the Department of Anthropology and as Director of its M.A. course in Rural Development. His CV lists these further roles in and around the department:</p>
+  <p>At Ranchi University Dr. Oraon served as Head of the Department of Anthropology, Dean of the Faculty of Social Sciences and Director of the M.A. course in Rural Development. His CV lists these further roles in and around the department:</p>
   <ul class="plain">
     <li>Coordinator, UGC Special Assistance Programme (SAP), sponsored by UGC New Delhi for five years, 2009–2014</li>
     <li>Coordinator, UGC scheme for entry into services for students from ST, SC and minority communities</li>
@@ -268,7 +298,7 @@ const CH = [
   <h2>Books, journals and students</h2>
   <p>His CV counts around four dozen research papers on anthropology and other social sciences, published in national and international journals.</p>
   <div>
-    <div class="book"><time>1988</time><div><cite>Spectrum of Religion of Tribal Religion</cite></div></div>
+    <div class="book"><time>1988</time><div><cite>The Spectrum of Tribal Religion in Bihar: A Study of Continuity and Change among the Oraon of Chotanagpur</cite><span class="pub">Kishor Vidya Niketan, Varanasi. Still cited in Sarna scholarship, for example <a href="https://journals.sagepub.com/doi/abs/10.1177/20503032251344342" target="_blank" rel="noopener">Gautam, <i>Critical Research on Religion</i>, 2025</a>.</span></div></div>
     <div class="book"><time>2002</time><div><cite>Magic and Festivals of an Indian Tribe: The Munda</cite></div></div>
   </div>
   <h3>Editorships</h3>
@@ -284,8 +314,47 @@ const CH = [
     <div><strong>6</strong><span>more scholars registered</span></div>
   </div>`},
 
+{ id:"sarna", tab:"Sarna Dharma", view:[[75.5,20.5],[89,30]], home:true,
+  note:"The Sarna code campaign, Ranchi to Jantar Mantar",
+  html:`
+  <p class="eyebrow">Faith, identity and the census</p>
+  <h2>The voice of the Sarna code</h2>
+  <p>Sarna is the nature-centred faith of the Oraon, Munda and other Adivasi peoples, worshipped in sacred groves of sal. For decades its followers have asked for their own column in the census religion count. Dr. Oraon was the movement's leading intellectual, as convener and adviser of the Rashtriya Adivasi Samaj Sarna Dharma Raksha Abhiyan. He led its agitation without holding any formal post.</p>
+  <p class="quote">“Adivasis were never Hindus nor they ever will be.”<span class="tr">To NewsClick, October 2021</span></p>
+  <ol class="events" data-events="sarna"></ol>`},
+
+{ id:"legacy", tab:"Legacy", view:[[77,18],[93,28.5]], home:true,
+  note:"Ranchi, where he died in May 2023",
+  html:`
+  <p class="eyebrow">14 May 2023 and after</p>
+  <h2>Legacy</h2>
+  <p>Dr. Oraon died of kidney failure at Medanta Hospital, Ranchi, on 14 May 2023. Chief Minister Hemant Soren and other leaders offered condolences, and the Hindi press remembered him as an educationist and social revolutionary. One tribute recalled his saying that every educated person should be an intellectual.</p>
+  <ol class="events" data-events="legacy"></ol>
+  <h3>Watch</h3>
+  <p>His recorded interviews and speeches are collected in the <button class="inlink" data-go="videos">Videos</button> chapter.</p>
+  <h3>Read more</h3>
+  <ul class="plain sources">
+    <li><a href="https://www.arfjournals.com/image/catalog/Journals%20Papers/MII/2023/No.2-3/KARMA%20ORAON.pdf" target="_blank" rel="noopener">Obituary by Dr. Jagdeep Oraon</a>, <i>Man in India</i> 103, 2023</li>
+    <li><a href="https://janchowk.com/dr-karma-oraon-is-no-more/" target="_blank" rel="noopener">Obituary by Vishad Kumar</a>, Janchowk, 16 May 2023 (Hindi)</li>
+    <li><a href="https://www.adivasilivesmatter.com/post/a-great-journey-of-thoughts-struggles-and-dedication-of-dr-karma-oraon" target="_blank" rel="noopener">Tribute by Manoj Kujur</a>, Adivasi Lives Matter, 16 May 2023 (Hindi)</li>
+    <li><a href="https://religionnews.com/2022/11/23/clinging-to-ancient-faith-india-tribes-seek-religion-status/" target="_blank" rel="noopener">“Clinging to ancient faith, India tribes seek religion status”</a>, Associated Press, 23 Nov 2022</li>
+    <li><a href="https://www.outlookindia.com/national/adivasis-in-jharkhand-want-their-own-religion-will-rss-let-them-have-it--magazine-239454" target="_blank" rel="noopener">“Adivasis in Jharkhand want their own religion”</a>, Outlook</li>
+    <li><a href="https://ranchiuniversity.ac.in/phocadownload/Official_Document/1_Anthropology.pdf" target="_blank" rel="noopener">Evaluative report of the Department of Anthropology</a>, Ranchi University</li>
+    <li><a href="https://www.academia.edu/15136836/Genesis_and_Development_of_Ranchi_School_of_Anthropology" target="_blank" rel="noopener">“Genesis and Development of Ranchi School of Anthropology”</a>, V. P. Sharma, 2015</li>
+  </ul>`},
+
+{ id:"videos", tab:"Videos", wide:true, view:[[77,18],[93,28.5]], home:true,
+  note:"Videos",
+  html:`
+  <p class="eyebrow">In his own voice</p>
+  <h2>Videos</h2>
+  <p>Interviews and speeches by Dr. Oraon, most of them in Hindi. Press play to watch here, or open each video on its source site.</p>
+  <div class="vgrid" id="vgrid"></div>
+  <h3>Help find more</h3>
+  <p>Very little of his recorded work is on indexed YouTube. Local channels such as JHARKHAND NEWS 9, ETV Bharat Jharkhand, News11 Bharat and Lagatar covered the Sarna code rallies of 2020–22, the Jantar Mantar Mahadharna of 12 November 2022 and his funeral in May 2023. If you have a link or a recording, it can be added to this page.</p>`},
+
 { id:"bodies", tab:"Memberships", view:[[73,17],[92,30]], home:true,
-  note:"Institutions he has served",
+  note:"Institutions he served",
   html:`
   <p class="eyebrow">Institutions and associations</p>
   <h2>Memberships</h2>
@@ -301,9 +370,30 @@ const CH = [
     <li>Life member, Indian Institute of Public Administration, New Delhi</li>
     <li>Life member, Authors Guild of India, New Delhi</li>
   </ul>
-  <p class="src">Source: curriculum vitae of Dr. Karma Oraon (scanned, nine pages; latest entry July 2014). Map positions are city-level and approximate. Personal contact details in the CV are intentionally left off this site.</p>`,
+  <p class="src">Sources: the curriculum vitae of Dr. Karma Oraon (scanned, nine pages; latest entry July 2014) and a web research sourcebook compiled on 2 October 2026, with links given in the Sarna Dharma and Legacy chapters. Where sources disagree, this site follows the CV: it gives his birth date as 24 October 1952 (one tribute says 1951) and his first appointment as 11 March 1978 (one obituary says 1979). Map positions are city-level and approximate. Personal contact details in the CV are left off this site.</p>`,
   places:["ranchi","bidisha","wardha","santiniketan","delhi"]}
 ];
+
+// ---------- Videos: yt = YouTube id (plays on the page); href = external page ----------
+const VIDEOS = [
+ {yt:"cUU3kK8QMtc", title:"आदिवासी महिला का गैर आदिवासी से विवाह के बाद उनके सामाजिक अधिकार पर क्या कहना है डॉ करमा उरांव का?", en:"On the social rights of Adivasi women who marry non-Adivasis", source:"JHARKHAND NEWS 9 · YouTube", lang:"Hindi"},
+ {href:"https://www.etvbharat.com/hindi/jharkhand/city/ranchi/khatian-of-1932-should-get-place-in-local-and-planning-policy-in-jharkhand/jh20210921191443515", title:"1932 खतियान पर बैठक", en:"Video report of the 1932 Khatiyan meeting he chaired on Jharkhand's domicile policy", source:"ETV Bharat Jharkhand · 21 Sep 2021", lang:"Hindi"},
+ {href:"https://hi-in.facebook.com/%E0%A4%86%E0%A4%A6%E0%A4%BF%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%80-%E0%A4%B8%E0%A4%B0%E0%A4%A8%E0%A4%BE-%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE-778429052300276/videos/dr-karma-oraon/277119527702190/", title:"Dr. Karma Oraon", en:"A clip shared by the Adivasi Sarna Dharma community page, probably a speech", source:"Facebook · आदिवासी सरना धर्म", lang:"Hindi"}
+];
+function renderVideos(){
+  const g=document.getElementById("vgrid"); if(!g) return;
+  g.innerHTML=VIDEOS.map((v,i)=>`<figure class="vcard">
+    ${v.yt?`<div class="vframe"><button class="vplay" data-i="${i}" aria-label="Play: ${v.en}"><span class="vicon" aria-hidden="true"></span><span class="vlabel">Play video</span></button></div>`
+          :`<a class="vframe vext" href="${v.href}" target="_blank" rel="noopener"><span class="vlabel">Watch on ${v.source.split(" ·")[0]} ↗</span></a>`}
+    <figcaption><span class="where">${v.source} · ${v.lang}</span><span class="vtitle" lang="hi">${v.title}</span><span class="ven">${v.en}</span>
+    ${v.yt?`<a class="srclink" href="https://www.youtube.com/watch?v=${v.yt}" target="_blank" rel="noopener">Open on YouTube</a>`:""}</figcaption></figure>`).join("");
+  g.querySelectorAll(".vplay").forEach(b=>b.onclick=()=>{
+    const v=VIDEOS[+b.dataset.i], f=document.createElement("iframe");
+    f.src=`https://www.youtube-nocookie.com/embed/${v.yt}?autoplay=1&rel=0`;
+    f.title=v.en; f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true;
+    b.parentNode.replaceChild(f,b);
+  });
+}
 
 // ---------- Events: [date, placeKey, what, detail?, detailKind?] ----------
 const EV = {
@@ -361,6 +451,25 @@ india:[
  ["Undated","hazaribagh","National Seminar on Indian Tribe: Contemporary Issues, Vinoba Bhave University","Special lecture","talk"],
  ["Undated","bidisha","National Seminar on Tribe: Challenges &amp; Prospects","Chaired a session","chair"]
 ],
+sarna:[
+ ["1980–2005","lohardaga","Contested elections from 1980 on Janata and BJP tickets. In 2005 he stood as an Independent from Lohardaga and won 12,158 votes (8.83%).","","",["Wikipedia","https://en.wikipedia.org/wiki/Lohardaga_Assembly_constituency"]],
+ ["Sep 2015","chaibasa","Quoted in the national press on the census religion count in Singhbhum, comparing the Sarna population to that of Jains","","",["Scroll.in","https://scroll.in/article/754985/in-jharkhands-singhbhum-religion-census-deepens-divide-among-tribals"]],
+ ["Nov 2020","ranchi","Explained the census religion columns as a tribal affairs expert, on the day the Jharkhand Assembly passed its Sarna code resolution","","",["ETV Bharat","https://www.etvbharat.com/english/state/jharkhand/explained-special-religion-code-for-jharkhands-sarna-tribe/na20201112071135033"]],
+ ["Sep 2021","ranchi","Chaired a meeting demanding that the 1932 Khatiyan land records be the basis of Jharkhand's local and planning policy","","",["ETV Bharat","https://www.etvbharat.com/hindi/jharkhand/city/ranchi/khatian-of-1932-should-get-place-in-local-and-planning-policy-in-jharkhand/jh20210921191443515"]],
+ ["Oct 2021","ranchi","Led the Sarna Dharma Raksha Abhiyan's agitation for a religion code in the census","Adivasis were never Hindus nor they ever will be.","quote",["NewsClick","https://www.newsclick.in/Tribal-Outfits-Demand-Religious-Code-Census-2021-Plan-Agitations"]],
+ ["Dec 2021","ranchi","As convener of the Abhiyan, criticised the central government's inaction on a separate religion code","","",["UCA News","https://www.ucanews.com/news/indian-tribal-people-up-the-ante-on-separate-religion-code/95302"]],
+ ["Aug 2022","ranchi","On World Adivasi Day, said Adivasis were being deceived, citing contract-job reservation, the stalled Sarna code and malnutrition","","",["ETV Bharat","https://www.etvbharat.com/hindi/jharkhand/state/ranchi/world-tribal-day-status-of-tribal-community-in-jharkhand/jh20220809050429212212000"]],
+ ["Sep 2022","ranchi","Adivasi groups resolved to intensify the agitation; he spoke as adviser to the Abhiyan on preserving tribal identity","","",["SabrangIndia","https://sabrangindia.in/adivasi-groups-resolve-intensify-agitation-demanding-inclusion-sarna-code-census/"]],
+ ["12 Nov 2022","delhi","Spoke at the Sarna Mahadharna at Jantar Mantar, calling the denial of a religion code to crores of tribals an injustice","We are going through an identity crisis.","quote",["Lagatar","https://lagatar24.com/sarna-followers-stage-dharna-for-separate-religion-at-jantar-mantar/"]],
+ ["Mar 2023","ranchi","Spoke during Sarhul, the spring festival of the sal blossom, in one of his last press quotes","The passing of Sarna code was a matter of identity.","quote",["Outlook","https://www.outlookindia.com/national/adivasis-in-jharkhand-celebrate-nature-through-sarhul-recognition-of-sarna-a-bonus--news-272681"]]
+],
+legacy:[
+ ["1952","bishunpur","Born in Longa Mahua Toli village, Bishunpur block, Gumla district, to a farming family","","",["Adivasi Lives Matter","https://www.adivasilivesmatter.com/post/a-great-journey-of-thoughts-struggles-and-dedication-of-dr-karma-oraon"]],
+ ["2013","ranchi","Credited, with Prof. V. S. Sahay, with institutionalising the “Ranchi School of Anthropology” at the department's alumni meet","","",["V. P. Sharma, 2015","https://www.academia.edu/15136836/Genesis_and_Development_of_Ranchi_School_of_Anthropology"]],
+ ["14 May 2023","ranchi","Died at Medanta Hospital, Ranchi, aged about 72; condolences from Chief Minister Hemant Soren and other leaders","","",["Janchowk","https://janchowk.com/dr-karma-oraon-is-no-more/"]],
+ ["2023","ranchi","Remembered in an obituary in the anthropology journal Man in India","","",["Man in India","https://www.arfjournals.com/image/catalog/Journals%20Papers/MII/2023/No.2-3/KARMA%20ORAON.pdf"]],
+ ["Jun 2025","ranchi","Recalled as having guided the drafting of the Sarna code cabinet note and approved its draft","","",["The Followup","https://thefollowup.in/jharkhand/news/it-was-the-pressure-of-the-tribals-that-forced-the-political-parties-to-include-the-sarna-dharma-code-in-their-agenda-62548.html"]]
+],
 field:[
  ["Completed","santhal","Major research project on the socio-economic problems of primitive tribes and their solutions in Chotanagpur and Santhal Pargana, sanctioned by the Ministry of Social Justice and Empowerment, Government of India","",""],
  ["Completed","daltonganj","Four India Eco-Development projects on forest timber smuggling, firewood collection, forest grazing and NTFP, for the tiger reserve at Daltonganj, Government of Jharkhand, under a World Bank project","",""],
@@ -379,6 +488,7 @@ CH.forEach((c,i)=>{
   if(!c.places){
     const keys=new Set(["ranchi"]);
     if(c.all){Object.values(EV).flat().forEach(e=>keys.add(e[1]));}
+    if(c.wide){c.places=["ranchi"];return;}
     const m=c.html.match(/data-events="(\w+)"/);
     if(m) EV[m[1]].forEach(e=>keys.add(e[1]));
     c.places=[...keys];
@@ -386,8 +496,8 @@ CH.forEach((c,i)=>{
 });
 
 function evHTML(e){
-  const [d,k,what,det,kind]=e;
-  return `<li class="ev" data-place="${k}"><time>${d}</time><div><span class="where">${P[k][0]}</span><span class="what">${what}</span>${det?`<span class="paper ${kind}">${det}</span>`:""}</div></li>`;
+  const [d,k,what,det,kind,src]=e;
+  return `<li class="ev" data-place="${k}"><time>${d}</time><div><span class="where">${P[k][0]}</span><span class="what">${what}</span>${det?`<span class="paper ${kind}">${det}</span>`:""}${src?`<a class="srclink" href="${src[1]}" target="_blank" rel="noopener">${src[0]}</a>`:""}</div></li>`;
 }
 
 let cur=-1;
@@ -398,6 +508,9 @@ function show(i,user){
   tabsEl.children[i].scrollIntoView({block:"nearest",inline:"nearest"});
   let html=`<article class="chapter">${c.html}<div class="pager"><button id="prev" ${i?"":"hidden"}>&larr; ${i?CH[i-1].tab:""}</button><button id="next" ${i<CH.length-1?"":"hidden"}>${i<CH.length-1?CH[i+1].tab:""} &rarr;</button></div></article>`;
   panel.innerHTML=html;
+  document.querySelector(".stage").classList.toggle("wide",!!c.wide);
+  renderVideos();
+  panel.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(CH.findIndex(x=>x.id===b.dataset.go),true));
   panel.querySelectorAll("[data-events]").forEach(ol=>{ol.innerHTML=EV[ol.dataset.events].map(evHTML).join("");});
   panel.querySelector("#prev").onclick=()=>show(i-1,true);
   panel.querySelector("#next").onclick=()=>show(i+1,true);
@@ -409,7 +522,7 @@ function show(i,user){
   if(user && window.innerWidth<900) document.querySelector(".tabs").scrollIntoView({block:"start"});
   document.getElementById("mapnote").innerHTML=`<i class="home"></i>Ranchi &nbsp; <i></i>${c.note}`;
   try{history.replaceState(null,"","#"+c.id);}catch(e){}
-  if(window.MAP) MAP.go(c);
+  if(window.MAP && !c.wide) MAP.go(c);
 }
 
 // ---------- Map ----------
